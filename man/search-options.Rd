@@ -2,8 +2,7 @@
 % Please edit documentation in R/search.R
 \name{searchOptions}
 \alias{searchOptions}
-\alias{searchOSMOptions}
-\alias{searchMarkersOptions}
+\alias{searchFeaturesOptions}
 \title{Options for search control.}
 \usage{
 searchOptions(url = "", sourceData = NULL, jsonpParam = NULL,
@@ -14,16 +13,10 @@ searchOptions(url = "", sourceData = NULL, jsonpParam = NULL,
   tipAutoSubmit = TRUE, firstTipSubmit = FALSE, autoResize = TRUE,
   collapsed = TRUE, autoCollapse = FALSE, autoCollapseTime = 1200,
   textErr = "Location Not Found", textCancel = "Cancel",
-  textPlaceholder = "Search...", position = "topright",
+  textPlaceholder = "Search...", position = "topleft",
   hideMarkerOnCollapse = FALSE)
 
-
-  searchOSMOptions(url = "//nominatim.openstreetmap.org/search?format=json&q={s}",
-  jsonpParam = "json_callback", propertyName = "display_name",
-  propertyLoc = c("lat", "lon"), autoType = FALSE, autoCollapse = TRUE,
-  minLength = 2, ...)
-
-searchMarkersOptions(propertyName = "label", initial = FALSE,
+searchFeaturesOptions(propertyName = "label", initial = FALSE,
   openPopup = FALSE, ...)
 }
 \arguments{
@@ -33,7 +26,7 @@ searchMarkersOptions(propertyName = "label", initial = FALSE,
 
 \item{jsonpParam}{jsonp param name for search by jsonp service, ex: "callback".}
 
-\item{propertyLoc}{field for remapping location, using array: ['latname','lonname'] for select double fields(ex. ['lat','lon'] ) support dotted format: 'prop.subprop.title'.}
+\item{propertyLoc}{field for remapping location, using array: ["latname","lonname"] for select double fields(ex. ["lat","lon"] ) support dotted format: "prop.subprop.title".}
 
 \item{propertyName}{property in marker.options(or feature.properties for vector layer) trough filter elements in layer,.}
 
@@ -79,18 +72,16 @@ searchMarkersOptions(propertyName = "label", initial = FALSE,
 
 \item{textPlaceholder}{placeholder value.}
 
-\item{position}{'topleft'.}
+\item{position}{"topleft".}
 
 \item{hideMarkerOnCollapse}{remove circle and marker on search control collapsed.}
 
-\item{...}{other options for \code{searchOptions}().}
+\item{openPopup}{whether to open the popup associated with the feature when the feature is searched for}
 
-\item{openPopup}{whether to open the popup associated with the marker when the marker is searched for}
+\item{...}{Other options to pass to \code{\link{searchOptions}()} function.}
 }
 \description{
 Options for search control.
 
-Customized searchOptions for opensteetmap search
-
-Customized searchOptions for Marker Search
+Customized searchOptions for Feature Search
 }

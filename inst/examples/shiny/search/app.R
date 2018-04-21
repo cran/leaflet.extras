@@ -1,4 +1,3 @@
-library(leaflet)
 library(leaflet.extras)
 library(shiny)
 
@@ -7,10 +6,15 @@ ui <- leafletOutput("leafmap")
 server <- function(input, output, session) {
   output$leafmap <- renderLeaflet({
     leaflet() %>%
-      addTiles() %>%
+      addProviderTiles(providers$CartoDB.Positron) %>%
       addSearchOSM(
         options = searchOSMOptions(
-          position = 'topleft'))
+          position = "topleft"))
+  })
+
+  observeEvent(input$leafmap_search_location_found, {
+    print("Location Found")
+    print(input$leafmap_search_location_found)
   })
 
 }
