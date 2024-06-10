@@ -1,20 +1,17 @@
 omnivoreDependencies <- function() {
   list(
-    # // "csv2geojson": "5.0.2",
-    # // "togeojson": "0.16.0",
-    # // "topojson": "3.0.2"
-    html_dep_prod("csv2geojson", "5.0.2"),
-    html_dep_prod("togeojson", "0.16.0"),
+    html_dep_prod("csv2geojson", "5.1.2"),
+    html_dep_prod("togeojson", "0.16.2"),
     html_dep_prod("topojson", "3.0.2"),
     # polyline is not implemented
     # wellknown is not implemented
 
-    # // "@mapbox/leaflet-omnivore": "0.3.4",
-    html_dep_prod("lfx-omnivore", "3.0.2", has_binding = TRUE)
+    html_dep_prod("lfx-omnivore", "3.0.4", has_binding = TRUE)
   )
 }
 
 # Source https://github.com/timwis/leaflet-choropleth
+# Source New https://github.com/trafficonese/leaflet-choropleth
 geoJSONChoroplethDependency <- function() {
   list(
     # // "leaflet-choropleth": "1.1.4",
@@ -25,27 +22,26 @@ geoJSONChoroplethDependency <- function() {
 
 # Utility Function
 invokeJSAddMethod <- function(
-  jsMethod, # The javascript method to invoke
-  map, data, layerId = NULL, group = NULL,
-  markerType = NULL, markerIcons = NULL,
-  markerIconProperty = NULL, markerOptions = leaflet::markerOptions(),
-  clusterOptions = NULL, clusterId = NULL,
-  labelProperty = NULL, labelOptions = leaflet::labelOptions(),
-  popupProperty = NULL, popupOptions = leaflet::popupOptions(),
-  stroke = TRUE,
-  color = "#03F",
-  weight = 5,
-  opacity = 0.5,
-  fill = TRUE,
-  fillColor = color,
-  fillOpacity = 0.2,
-  dashArray = NULL,
-  smoothFactor = 1.0,
-  noClip = FALSE,
-  pathOptions = leaflet::pathOptions(),
-  highlightOptions = NULL,
-  ...
-) {
+    jsMethod, # The javascript method to invoke
+    map, data, layerId = NULL, group = NULL,
+    markerType = NULL, markerIcons = NULL,
+    markerIconProperty = NULL, markerOptions = leaflet::markerOptions(),
+    clusterOptions = NULL, clusterId = NULL,
+    labelProperty = NULL, labelOptions = leaflet::labelOptions(),
+    popupProperty = NULL, popupOptions = leaflet::popupOptions(),
+    stroke = TRUE,
+    color = "#03F",
+    weight = 5,
+    opacity = 0.5,
+    fill = TRUE,
+    fillColor = color,
+    fillOpacity = 0.2,
+    dashArray = NULL,
+    smoothFactor = 1.0,
+    noClip = FALSE,
+    pathOptions = leaflet::pathOptions(),
+    highlightOptions = NULL,
+    ...) {
   if (!is.null(markerType) && !(markerType %in% c("marker", "circleMarker"))) {
     stop("markerType if specified then it needs to be either \"marker\" or \"clusterMarker\"")
   }
@@ -53,32 +49,35 @@ invokeJSAddMethod <- function(
   map$dependencies <- c(map$dependencies, omnivoreDependencies())
 
   if (!is.null(clusterOptions)) {
-    map$dependencies = c(map$dependencies,
-                         leaflet::leafletDependencies$markerCluster())
+    map$dependencies <- c(
+      map$dependencies,
+      leaflet::leafletDependencies$markerCluster()
+    )
   }
 
-  pathOptions = c(pathOptions, list(
+  pathOptions <- c(pathOptions, list(
     stroke = stroke, color = color, weight = weight, opacity = opacity,
     fill = fill, fillColor = fillColor, fillOpacity = fillOpacity,
-    dashArray = dashArray, smoothFactor = smoothFactor, noClip = noClip))
+    dashArray = dashArray, smoothFactor = smoothFactor, noClip = noClip
+  ))
 
   markerIconFunction <- NULL
   if (!is.null(markerIcons)) {
-     if (inherits(markerIcons, "leaflet_icon_set") ||
-        inherits(markerIcons, "leaflet_icon")) {
-       markerIconFunction <- defIconFunction
-     } else if (inherits(markerIcons, "leaflet_awesome_icon_set") ||
-               inherits(markerIcons, "leaflet_awesome_icon")) {
-       if (inherits(markerIcons, "leaflet_awesome_icon_set")) {
-         libs <- unique(sapply(markerIcons, function(icon) icon$library))
-         map <- addAwesomeMarkersDependencies(map, libs)
-       } else {
-         map <- addAwesomeMarkersDependencies(map, markerIcons$library)
-       }
-       markerIconFunction <- awesomeIconFunction
-     } else {
-       stop("markerIcons should be created using either leaflet::iconList() or leaflet::awesomeIconList()")
-     }
+    if (inherits(markerIcons, "leaflet_icon_set") ||
+      inherits(markerIcons, "leaflet_icon")) {
+      markerIconFunction <- defIconFunction
+    } else if (inherits(markerIcons, "leaflet_awesome_icon_set") ||
+      inherits(markerIcons, "leaflet_awesome_icon")) {
+      if (inherits(markerIcons, "leaflet_awesome_icon_set")) {
+        libs <- unique(sapply(markerIcons, function(icon) icon$library))
+        map <- addAwesomeMarkersDependencies(map, libs)
+      } else {
+        map <- addAwesomeMarkersDependencies(map, markerIcons$library)
+      }
+      markerIconFunction <- awesomeIconFunction
+    } else {
+      stop("markerIcons should be created using either leaflet::iconList() or leaflet::awesomeIconList()")
+    }
   }
 
   if (missing(...)) {
@@ -88,8 +87,8 @@ invokeJSAddMethod <- function(
       markerIconProperty, markerOptions, markerIconFunction,
       clusterOptions, clusterId,
       labelProperty, labelOptions, popupProperty, popupOptions,
-      pathOptions, highlightOptions)
-
+      pathOptions, highlightOptions
+    )
   } else {
     invokeMethod(
       map, getMapData(map), jsMethod, data, layerId, group,
@@ -97,9 +96,9 @@ invokeJSAddMethod <- function(
       markerIconProperty, markerOptions, markerIconFunction,
       clusterOptions, clusterId,
       labelProperty, labelOptions, popupProperty, popupOptions,
-      pathOptions, highlightOptions, ...)
+      pathOptions, highlightOptions, ...
+    )
   }
-
 }
 
 
@@ -154,7 +153,8 @@ invokeJSAddMethod <- function(
 #' @export
 #' @examples
 #' ## addGeoJSONv2
-#' \donttest{geoJson <- readr::read_file(
+#' \donttest{
+#' geoJson <- readr::read_file(
 #'   "https://rawgit.com/benbalter/dc-maps/master/maps/historic-landmarks-points.geojson"
 #' )
 #'
@@ -162,14 +162,16 @@ invokeJSAddMethod <- function(
 #'   setView(-77.0369, 38.9072, 12) %>%
 #'   addProviderTiles(providers$CartoDB.Positron) %>%
 #'   addWebGLGeoJSONHeatmap(
-#'     geoJson, size = 30 , units = "px"
+#'     geoJson,
+#'     size = 30, units = "px"
 #'   ) %>%
 #'   addGeoJSONv2(
 #'     geoJson,
 #'     markerType = "circleMarker",
 #'     stroke = FALSE, fillColor = "black", fillOpacity = 0.7,
 #'     markerOptions = markerOptions(radius = 2)
-#'   )}
+#'   )
+#' }
 #'
 #' ## for more examples see
 #' # browseURL(system.file("examples/draw.R", package = "leaflet.extras"))
@@ -177,29 +179,27 @@ invokeJSAddMethod <- function(
 #' # browseURL(system.file("examples/search.R", package = "leaflet.extras"))
 #' # browseURL(system.file("examples/TopoJSON.R", package = "leaflet.extras"))
 #'
-#'
-addGeoJSONv2 = function(
-  map, geojson, layerId = NULL, group = NULL,
-  markerType = NULL, markerIcons = NULL,
-  markerIconProperty = NULL, markerOptions = leaflet::markerOptions(),
-  clusterOptions = NULL, clusterId = NULL,
-  labelProperty = NULL, labelOptions = leaflet::labelOptions(),
-  popupProperty = NULL, popupOptions = leaflet::popupOptions(),
-  stroke = TRUE,
-  color = "#03F",
-  weight = 5,
-  opacity = 0.5,
-  fill = TRUE,
-  fillColor = color,
-  fillOpacity = 0.2,
-  dashArray = NULL,
-  smoothFactor = 1.0,
-  noClip = FALSE,
-  pathOptions = leaflet::pathOptions(),
-  highlightOptions = NULL
-) {
-
-  invokeJSAddMethod("addGeoJSONv2",
+addGeoJSONv2 <- function(
+    map, geojson, layerId = NULL, group = NULL,
+    markerType = NULL, markerIcons = NULL,
+    markerIconProperty = NULL, markerOptions = leaflet::markerOptions(),
+    clusterOptions = NULL, clusterId = NULL,
+    labelProperty = NULL, labelOptions = leaflet::labelOptions(),
+    popupProperty = NULL, popupOptions = leaflet::popupOptions(),
+    stroke = TRUE,
+    color = "#03F",
+    weight = 5,
+    opacity = 0.5,
+    fill = TRUE,
+    fillColor = color,
+    fillOpacity = 0.2,
+    dashArray = NULL,
+    smoothFactor = 1.0,
+    noClip = FALSE,
+    pathOptions = leaflet::pathOptions(),
+    highlightOptions = NULL) {
+  invokeJSAddMethod(
+    "addGeoJSONv2",
     map, geojson, layerId, group,
     markerType, markerIcons,
     markerIconProperty, markerOptions,
@@ -215,7 +215,8 @@ addGeoJSONv2 = function(
     dashArray,
     smoothFactor,
     noClip,
-    pathOptions, highlightOptions)
+    pathOptions, highlightOptions
+  )
 }
 
 #' Options to customize a Choropleth Legend
@@ -226,12 +227,13 @@ addGeoJSONv2 = function(
 #' @export
 #' @rdname omnivore
 legendOptions <- function(
-  title = NULL,
-  position = c("bottomleft", "bottomright", "topleft", "topright"),
-  locale = "en-US",
-  numberFormatOptions = list(style = "decimal",
-                             maximumFractionDigits = 2)
-) {
+    title = NULL,
+    position = c("bottomleft", "bottomright", "topleft", "topright"),
+    locale = "en-US",
+    numberFormatOptions = list(
+      style = "decimal",
+      maximumFractionDigits = 2
+    )) {
   position <- match.arg(position)
   leaflet::filterNULL(
     list(
@@ -260,7 +262,8 @@ legendOptions <- function(
 #' @export
 #' @examples
 #' ## addGeoJSONChoropleth
-#' \donttest{geoJson <- readr::read_file(
+#' \donttest{
+#' geoJson <- readr::read_file(
 #'   "https://rawgit.com/benbalter/dc-maps/master/maps/ward-2012.geojson"
 #' )
 #'
@@ -286,10 +289,14 @@ legendOptions <- function(
 #'     highlightOptions = highlightOptions(
 #'       weight = 2, color = "#000000",
 #'       fillOpacity = 1, opacity = 1,
-#'       bringToFront = TRUE, sendToBack = TRUE),
+#'       bringToFront = TRUE, sendToBack = TRUE
+#'     ),
 #'     pathOptions = pathOptions(
 #'       showMeasurements = TRUE,
-#'       measurementOptions = measurePathOptions(imperial = TRUE)))}
+#'       measurementOptions = measurePathOptions(imperial = TRUE)
+#'     )
+#'   )
+#' }
 #'
 #' ## for more examples see
 #' # browseURL(system.file("examples/geojsonv2.R", package = "leaflet.extras"))
@@ -297,39 +304,39 @@ legendOptions <- function(
 #' # browseURL(system.file("examples/search.R", package = "leaflet.extras"))
 #' # browseURL(system.file("examples/TopoJSON.R", package = "leaflet.extras"))
 #'
-#'
-addGeoJSONChoropleth = function(
-  map, geojson, layerId = NULL, group = NULL,
-  valueProperty,
-  labelProperty = NULL, labelOptions = leaflet::labelOptions(),
-  popupProperty = NULL, popupOptions = leaflet::popupOptions(),
-  scale = c("white", "red"),
-  steps = 5,
-  mode = "q",
-  channelMode = c("rgb", "lab", "hsl", "lch"),
-  padding = NULL,
-  correctLightness = FALSE,
-  bezierInterpolate = FALSE,
-  colors = NULL,
-  stroke = TRUE,
-  color = "#03F",
-  weight = 1,
-  opacity = 0.5,
-  fillOpacity = 0.2,
-  dashArray = NULL,
-  smoothFactor = 1.0,
-  noClip = FALSE,
-  pathOptions = leaflet::pathOptions(),
-  highlightOptions = NULL,
-  legendOptions = NULL
-) {
+addGeoJSONChoropleth <- function(
+    map, geojson, layerId = NULL, group = NULL,
+    valueProperty,
+    labelProperty = NULL, labelOptions = leaflet::labelOptions(),
+    popupProperty = NULL, popupOptions = leaflet::popupOptions(),
+    scale = c("white", "red"),
+    steps = 5,
+    mode = "q",
+    channelMode = c("rgb", "lab", "hsl", "lch"),
+    padding = NULL,
+    correctLightness = FALSE,
+    bezierInterpolate = FALSE,
+    colors = NULL,
+    stroke = TRUE,
+    color = "#03F",
+    weight = 1,
+    opacity = 0.5,
+    fillOpacity = 0.2,
+    dashArray = NULL,
+    smoothFactor = 1.0,
+    noClip = FALSE,
+    pathOptions = leaflet::pathOptions(),
+    highlightOptions = NULL,
+    legendOptions = NULL) {
   map$dependencies <- c(map$dependencies, omnivoreDependencies())
-  map$dependencies <- c(map$dependencies,
-                        geoJSONChoroplethDependency())
+  map$dependencies <- c(
+    map$dependencies,
+    geoJSONChoroplethDependency()
+  )
 
   channelMode <- match.arg(channelMode)
 
-  pathOptions = c(pathOptions, list(
+  pathOptions <- c(pathOptions, list(
     valueProperty = valueProperty,
     scale = scale,
     steps = steps,
@@ -353,7 +360,7 @@ addGeoJSONChoropleth = function(
     geojson, layerId, group,
     labelProperty, labelOptions, popupProperty, popupOptions,
     pathOptions, highlightOptions, legendOptions
-    )
+  )
 }
 
 #' Adds a KML to the leaflet map.
@@ -362,7 +369,8 @@ addGeoJSONChoropleth = function(
 #' @export
 #' @examples
 #' ## addKML
-#' \donttest{kml <- readr::read_file(
+#' \donttest{
+#' kml <- readr::read_file(
 #'   system.file("examples/data/kml/crimes.kml.zip", package = "leaflet.extras")
 #' )
 #'
@@ -375,30 +383,30 @@ addGeoJSONChoropleth = function(
 #'     markerType = "circleMarker",
 #'     stroke = FALSE, fillColor = "black", fillOpacity = 1,
 #'     markerOptions = markerOptions(radius = 1)
-#'   )}
+#'   )
+#' }
 #'
-#'
-addKML = function(
-  map, kml, layerId = NULL, group = NULL,
-  markerType = NULL, markerIcons = NULL,
-  markerIconProperty = NULL, markerOptions = leaflet::markerOptions(),
-  clusterOptions = NULL, clusterId = NULL,
-  labelProperty = NULL, labelOptions = leaflet::labelOptions(),
-  popupProperty = NULL, popupOptions = leaflet::popupOptions(),
-  stroke = TRUE,
-  color = "#03F",
-  weight = 5,
-  opacity = 0.5,
-  fill = TRUE,
-  fillColor = color,
-  fillOpacity = 0.2,
-  dashArray = NULL,
-  smoothFactor = 1.0,
-  noClip = FALSE,
-  pathOptions = leaflet::pathOptions(),
-  highlightOptions = NULL
-) {
-  invokeJSAddMethod("addKML",
+addKML <- function(
+    map, kml, layerId = NULL, group = NULL,
+    markerType = NULL, markerIcons = NULL,
+    markerIconProperty = NULL, markerOptions = leaflet::markerOptions(),
+    clusterOptions = NULL, clusterId = NULL,
+    labelProperty = NULL, labelOptions = leaflet::labelOptions(),
+    popupProperty = NULL, popupOptions = leaflet::popupOptions(),
+    stroke = TRUE,
+    color = "#03F",
+    weight = 5,
+    opacity = 0.5,
+    fill = TRUE,
+    fillColor = color,
+    fillOpacity = 0.2,
+    dashArray = NULL,
+    smoothFactor = 1.0,
+    noClip = FALSE,
+    pathOptions = leaflet::pathOptions(),
+    highlightOptions = NULL) {
+  invokeJSAddMethod(
+    "addKML",
     map, kml, layerId, group,
     markerType, markerIcons,
     markerIconProperty, markerOptions,
@@ -414,7 +422,8 @@ addKML = function(
     dashArray,
     smoothFactor,
     noClip,
-    pathOptions, highlightOptions)
+    pathOptions, highlightOptions
+  )
 }
 
 #' Adds a KML Choropleth.
@@ -422,7 +431,8 @@ addKML = function(
 #' @export
 #' @examples
 #' ## addKMLChoropleth
-#' \donttest{kml <- readr::read_file(
+#' \donttest{
+#' kml <- readr::read_file(
 #'   system.file("examples/data/kml/cb_2015_us_state_20m.kml.zip", package = "leaflet.extras")
 #' )
 #'
@@ -433,12 +443,12 @@ addKML = function(
 #'   addKMLChoropleth(
 #'     kml,
 #'     valueProperty = JS(
-#'       'function(feature){
+#'       "function(feature){
 #'          var props = feature.properties;
 #'          var aland = props.ALAND/100000;
 #'          var awater = props.AWATER/100000;
 #'          return 100*awater/(awater+aland);
-#'       }'
+#'       }"
 #'     ),
 #'     scale = "OrRd", mode = "q", steps = 5,
 #'     padding = c(0.2, 0),
@@ -456,39 +466,40 @@ addKML = function(
 #'         maximumFractionDigits = 2
 #'       )
 #'     )
-#'   )}
+#'   )
+#' }
 #'
-#'
-addKMLChoropleth = function(
-  map, kml, layerId = NULL, group = NULL,
-  valueProperty,
-  labelProperty = NULL, labelOptions = leaflet::labelOptions(),
-  popupProperty = NULL, popupOptions = leaflet::popupOptions(),
-  scale = c("white", "red"),
-  steps = 5,
-  mode = "q",
-  channelMode = c("rgb", "lab", "hsl", "lch"),
-  padding = NULL,
-  correctLightness = FALSE,
-  bezierInterpolate = FALSE,
-  colors = NULL,
-  stroke = TRUE,
-  color = "#03F",
-  weight = 1,
-  opacity = 0.5,
-  fillOpacity = 0.2,
-  dashArray = NULL,
-  smoothFactor = 1.0,
-  noClip = FALSE,
-  pathOptions = leaflet::pathOptions(),
-  highlightOptions = NULL,
-  legendOptions = NULL
-) {
+addKMLChoropleth <- function(
+    map, kml, layerId = NULL, group = NULL,
+    valueProperty,
+    labelProperty = NULL, labelOptions = leaflet::labelOptions(),
+    popupProperty = NULL, popupOptions = leaflet::popupOptions(),
+    scale = c("white", "red"),
+    steps = 5,
+    mode = "q",
+    channelMode = c("rgb", "lab", "hsl", "lch"),
+    padding = NULL,
+    correctLightness = FALSE,
+    bezierInterpolate = FALSE,
+    colors = NULL,
+    stroke = TRUE,
+    color = "#03F",
+    weight = 1,
+    opacity = 0.5,
+    fillOpacity = 0.2,
+    dashArray = NULL,
+    smoothFactor = 1.0,
+    noClip = FALSE,
+    pathOptions = leaflet::pathOptions(),
+    highlightOptions = NULL,
+    legendOptions = NULL) {
   map$dependencies <- c(map$dependencies, omnivoreDependencies())
-  map$dependencies <- c(map$dependencies,
-                        geoJSONChoroplethDependency())
+  map$dependencies <- c(
+    map$dependencies,
+    geoJSONChoroplethDependency()
+  )
   channelMode <- match.arg(channelMode)
-  pathOptions = c(pathOptions, list(
+  pathOptions <- c(pathOptions, list(
     valueProperty = valueProperty,
     scale = scale,
     steps = steps,
@@ -522,10 +533,9 @@ addKMLChoropleth = function(
 #' @rdname omnivore
 #' @export
 csvParserOptions <- function(
-  latfield,
-  lonfield,
-  delimiter = ","
-) {
+    latfield,
+    lonfield,
+    delimiter = ",") {
   list(
     latfield = latfield,
     lonfield = lonfield,
@@ -541,7 +551,8 @@ csvParserOptions <- function(
 #' @export
 #' @examples
 #' ## addCSV
-#' \donttest{csv <- readr::read_file(
+#' \donttest{
+#' csv <- readr::read_file(
 #'   system.file("examples/data/csv/world_airports.csv.zip", package = "leaflet.extras")
 #' )
 #'
@@ -553,30 +564,31 @@ csvParserOptions <- function(
 #'     csvParserOptions("latitude_deg", "longitude_deg"),
 #'     markerType = "circleMarker",
 #'     stroke = FALSE, fillColor = "red", fillOpacity = 1,
-#'     markerOptions = markerOptions(radius = 0.5))}
+#'     markerOptions = markerOptions(radius = 0.5)
+#'   )
+#' }
 #'
-#'
-addCSV = function(
-  map, csv, csvParserOptions, layerId = NULL, group = NULL,
-  markerType = NULL, markerIcons = NULL,
-  markerIconProperty = NULL, markerOptions = leaflet::markerOptions(),
-  clusterOptions = NULL, clusterId = NULL,
-  labelProperty = NULL, labelOptions = leaflet::labelOptions(),
-  popupProperty = NULL, popupOptions = leaflet::popupOptions(),
-  stroke = TRUE,
-  color = "#03F",
-  weight = 5,
-  opacity = 0.5,
-  fill = TRUE,
-  fillColor = color,
-  fillOpacity = 0.2,
-  dashArray = NULL,
-  smoothFactor = 1.0,
-  noClip = FALSE,
-  pathOptions = leaflet::pathOptions(),
-  highlightOptions = NULL
-) {
-  invokeJSAddMethod("addCSV",
+addCSV <- function(
+    map, csv, csvParserOptions, layerId = NULL, group = NULL,
+    markerType = NULL, markerIcons = NULL,
+    markerIconProperty = NULL, markerOptions = leaflet::markerOptions(),
+    clusterOptions = NULL, clusterId = NULL,
+    labelProperty = NULL, labelOptions = leaflet::labelOptions(),
+    popupProperty = NULL, popupOptions = leaflet::popupOptions(),
+    stroke = TRUE,
+    color = "#03F",
+    weight = 5,
+    opacity = 0.5,
+    fill = TRUE,
+    fillColor = color,
+    fillOpacity = 0.2,
+    dashArray = NULL,
+    smoothFactor = 1.0,
+    noClip = FALSE,
+    pathOptions = leaflet::pathOptions(),
+    highlightOptions = NULL) {
+  invokeJSAddMethod(
+    "addCSV",
     map, csv, layerId, group,
     markerType, markerIcons,
     markerIconProperty, markerOptions,
@@ -592,7 +604,8 @@ addCSV = function(
     dashArray,
     smoothFactor,
     noClip,
-    pathOptions, highlightOptions, csvParserOptions)
+    pathOptions, highlightOptions, csvParserOptions
+  )
 }
 
 #' Adds a GPX to the leaflet map.
@@ -601,7 +614,8 @@ addCSV = function(
 #' @export
 #' @examples
 #' ## addGPX
-#' \donttest{airports <- readr::read_file(
+#' \donttest{
+#' airports <- readr::read_file(
 #'   system.file("examples/data/gpx/md-airports.gpx.zip", package = "leaflet.extras")
 #' )
 #'
@@ -619,33 +633,33 @@ addCSV = function(
 #'     stroke = FALSE, fillColor = "black", fillOpacity = 1,
 #'     markerOptions = markerOptions(radius = 1.5),
 #'     group = "airports"
-#'   )}
+#'   )
+#' }
 #'
 #' ## for a larger example see
 #' # browseURL(system.file("examples/GPX.R", package = "leaflet.extras"))
 #'
-#'
-addGPX = function(
-  map, gpx, layerId = NULL, group = NULL,
-  markerType = NULL, markerIcons = NULL,
-  markerIconProperty = NULL, markerOptions = leaflet::markerOptions(),
-  clusterOptions = NULL, clusterId = NULL,
-  labelProperty = NULL, labelOptions = leaflet::labelOptions(),
-  popupProperty = NULL, popupOptions = leaflet::popupOptions(),
-  stroke = TRUE,
-  color = "#03F",
-  weight = 5,
-  opacity = 0.5,
-  fill = TRUE,
-  fillColor = color,
-  fillOpacity = 0.2,
-  dashArray = NULL,
-  smoothFactor = 1.0,
-  noClip = FALSE,
-  pathOptions = leaflet::pathOptions(),
-  highlightOptions = NULL
-) {
-  invokeJSAddMethod("addGPX",
+addGPX <- function(
+    map, gpx, layerId = NULL, group = NULL,
+    markerType = NULL, markerIcons = NULL,
+    markerIconProperty = NULL, markerOptions = leaflet::markerOptions(),
+    clusterOptions = NULL, clusterId = NULL,
+    labelProperty = NULL, labelOptions = leaflet::labelOptions(),
+    popupProperty = NULL, popupOptions = leaflet::popupOptions(),
+    stroke = TRUE,
+    color = "#03F",
+    weight = 5,
+    opacity = 0.5,
+    fill = TRUE,
+    fillColor = color,
+    fillOpacity = 0.2,
+    dashArray = NULL,
+    smoothFactor = 1.0,
+    noClip = FALSE,
+    pathOptions = leaflet::pathOptions(),
+    highlightOptions = NULL) {
+  invokeJSAddMethod(
+    "addGPX",
     map, gpx, layerId, group,
     markerType, markerIcons,
     markerIconProperty, markerOptions,
@@ -661,5 +675,6 @@ addGPX = function(
     dashArray,
     smoothFactor,
     noClip,
-    pathOptions, highlightOptions)
+    pathOptions, highlightOptions
+  )
 }

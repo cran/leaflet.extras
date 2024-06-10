@@ -1,9 +1,10 @@
 Package: leaflet.extras
 Type: Package
 Title: Extra Functionality for 'leaflet' Package
-Version: 1.0.0
+Version: 2.0.0
 Authors@R: c(
-      person("Bhaskar", "Karambelkar", email = "bhaskarvk@gmail.com", role = c("aut", "cre")),
+      person("Sebastian", "Gatscha", email = "sebastian_gatscha@gmx.at", role = c("aut", "cre")),
+      person("Bhaskar", "Karambelkar", email = "bhaskarvk@gmail.com", role = c("aut")),
       person("Barret", "Schloerke", email = "barret@rstudio.com", role = c("aut")),
       person("Bangyou", "Zheng", email= "Bangyou.Zheng@csiro.au", role = c("ctb"),
         comment = "Leaflet-search and Leaflet-GPS plugin integration"),
@@ -41,17 +42,18 @@ Description: The 'leaflet' JavaScript library provides many plugins some of whic
     plugins.
 License: GPL-3 | file LICENSE
 Encoding: UTF-8
-LazyData: true
 Depends: R (>= 3.1.0), leaflet (>= 2.0.0)
 Imports: htmlwidgets, htmltools, stringr, magrittr
-Suggests: jsonlite, readr
-URL: https://github.com/bhaskarvk/leaflet.extras,
-        https://bhaskarvk.github.io/leaflet.extras/
-BugReports: https://github.com/bhaskarvk/leaflet.extras/issues
-RoxygenNote: 6.0.1
+Suggests: jsonlite, readr, sf, xfun, testthat (>= 3.0.0)
+URL: https://github.com/trafficonese/leaflet.extras,
+        https://trafficonese.github.io/leaflet.extras/
+BugReports: https://github.com/trafficonese/leaflet.extras/issues
+RoxygenNote: 7.3.1
+Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2018-04-21 16:06:46 UTC; barret
-Author: Bhaskar Karambelkar [aut, cre],
+Packaged: 2024-06-10 10:54:30 UTC; kona1
+Author: Sebastian Gatscha [aut, cre],
+  Bhaskar Karambelkar [aut],
   Barret Schloerke [aut],
   Bangyou Zheng [ctb] (Leaflet-search and Leaflet-GPS plugin integration),
   Robin Cura [ctb] (Fixes for Draw Options),
@@ -80,6 +82,6 @@ Author: Bhaskar Karambelkar [aut, cre],
     library),
   Dale Harvey [ctb, cph] (pouchdb-browser library),
   Mike Bostock [ctb, cph] (topojson library)
-Maintainer: Bhaskar Karambelkar <bhaskarvk@gmail.com>
+Maintainer: Sebastian Gatscha <sebastian_gatscha@gmx.at>
 Repository: CRAN
-Date/Publication: 2018-04-21 21:20:53 UTC
+Date/Publication: 2024-06-10 13:20:06 UTC

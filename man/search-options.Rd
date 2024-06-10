@@ -5,22 +5,48 @@
 \alias{searchFeaturesOptions}
 \title{Options for search control.}
 \usage{
-searchOptions(url = "", sourceData = NULL, jsonpParam = NULL,
-  propertyLoc = "loc", propertyName = "title", formatData = NULL,
-  filterData = NULL, moveToLocation = TRUE, zoom = 17, buildTip = NULL,
-  container = "", minLength = 1, initial = TRUE, casesensitive = FALSE,
-  autoType = TRUE, delayType = 400, tooltipLimit = -1,
-  tipAutoSubmit = TRUE, firstTipSubmit = FALSE, autoResize = TRUE,
-  collapsed = TRUE, autoCollapse = FALSE, autoCollapseTime = 1200,
-  textErr = "Location Not Found", textCancel = "Cancel",
-  textPlaceholder = "Search...", position = "topleft",
-  hideMarkerOnCollapse = FALSE)
+searchOptions(
+  url = NULL,
+  sourceData = NULL,
+  jsonpParam = NULL,
+  propertyLoc = NULL,
+  propertyName = NULL,
+  formatData = NULL,
+  filterData = NULL,
+  moveToLocation = TRUE,
+  zoom = 17,
+  buildTip = NULL,
+  container = "",
+  minLength = 1,
+  initial = TRUE,
+  casesensitive = FALSE,
+  autoType = TRUE,
+  delayType = 400,
+  tooltipLimit = -1,
+  tipAutoSubmit = TRUE,
+  firstTipSubmit = FALSE,
+  autoResize = TRUE,
+  collapsed = TRUE,
+  autoCollapse = FALSE,
+  autoCollapseTime = 1200,
+  textErr = "Location Not Found",
+  textCancel = "Cancel",
+  textPlaceholder = "Search...",
+  position = "topleft",
+  hideMarkerOnCollapse = FALSE,
+  marker = list(icon = NULL, animate = TRUE, circle = list(radius = 10, weight = 3, color
+    = "#e03", stroke = TRUE, fill = FALSE))
+)
 
-searchFeaturesOptions(propertyName = "label", initial = FALSE,
-  openPopup = FALSE, ...)
+searchFeaturesOptions(
+  propertyName = "label",
+  initial = FALSE,
+  openPopup = FALSE,
+  ...
+)
 }
 \arguments{
-\item{url}{url for search by ajax request, ex: "search.php?q={s}". Can be function that returns string for dynamic parameter setting.}
+\item{url}{url for search by ajax request, ex: `search.php?q=\{s\}`. Can be function that returns string for dynamic parameter setting.}
 
 \item{sourceData}{function that fill _recordsCache, passed searching text by first param and callback in second.}
 
@@ -75,6 +101,8 @@ searchFeaturesOptions(propertyName = "label", initial = FALSE,
 \item{position}{"topleft".}
 
 \item{hideMarkerOnCollapse}{remove circle and marker on search control collapsed.}
+
+\item{marker}{Let's you set the icon. Can be an icon made by \code{\link[leaflet]{makeIcon}} or \code{\link[leaflet]{makeAwesomeIcon}}}
 
 \item{openPopup}{whether to open the popup associated with the feature when the feature is searched for}
 

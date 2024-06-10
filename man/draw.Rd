@@ -5,15 +5,23 @@
 \alias{removeDrawToolbar}
 \title{Adds a Toolbar to draw shapes/points on the map.}
 \usage{
-addDrawToolbar(map, targetLayerId = NULL, targetGroup = NULL,
+addDrawToolbar(
+  map,
+  targetLayerId = NULL,
+  targetGroup = NULL,
   position = c("topleft", "topright", "bottomleft", "bottomright"),
   polylineOptions = drawPolylineOptions(),
   polygonOptions = drawPolygonOptions(),
   circleOptions = drawCircleOptions(),
   rectangleOptions = drawRectangleOptions(),
   markerOptions = drawMarkerOptions(),
-  circleMarkerOptions = drawCircleMarkerOptions(), editOptions = FALSE,
-  singleFeature = FALSE)
+  circleMarkerOptions = drawCircleMarkerOptions(),
+  editOptions = FALSE,
+  singleFeature = FALSE,
+  toolbar = NULL,
+  handlers = NULL,
+  drag = TRUE
+)
 
 removeDrawToolbar(map, clearFeatures = FALSE)
 }
@@ -45,12 +53,41 @@ You can either set layerId or group or none but not both.}
 
 \item{singleFeature}{When set to TRUE, only one feature can be drawn at a time, the previous ones being removed.}
 
+\item{toolbar}{See \code{\link{toolbarOptions}}. Set to \code{NULL} to take Leaflets default values.}
+
+\item{handlers}{See \code{\link{handlersOptions}}. Set to \code{NULL} to take Leaflets default values.}
+
+\item{drag}{When set to \code{TRUE}, the drawn features will be draggable during editing, utilizing
+the \code{Leaflet.Draw.Drag} plugin. Otherwise, this library will not be included.}
+
 \item{clearFeatures}{whether to clear the map of drawn features.}
 }
 \description{
 Adds a Toolbar to draw shapes/points on the map.
 
 Removes the draw toolbar
+}
+\details{
+The drawn features emit events upon mouse interaction.
+Event names follow the pattern: \code{input$MAPID_LAYERCATEGORY_EVENTNAME},
+where \code{LAYERCATEGORY} can be one of:
+\itemize{
+  \item \code{marker}
+  \item \code{shape}
+  \item \code{polyline}
+}
+
+Similarly, for \code{EVENTNAME}, valid values are:
+\itemize{
+  \item \code{click}
+  \item \code{mouseover}
+  \item \code{mouseout}
+}
+
+See the provided example for usage:
+
+\code{browseURL(system.file("examples/shiny/draw-events/draw_mouse_events.R",
+                            package = "leaflet.extras"))}
 }
 \examples{
 leaflet() \%>\%
@@ -61,7 +98,7 @@ leaflet() \%>\%
     editOptions = editToolbarOptions(
       selectedPathOptions = selectedPathOptions()
     )
-  )  \%>\%
+  ) \%>\%
   addLayersControl(
     overlayGroups = c("draw"),
     options = layersControlOptions(collapsed = FALSE)
@@ -69,5 +106,10 @@ leaflet() \%>\%
   addStyleEditor()
 
 ## for more examples see
-# browseURL(system.file("examples/draw.R", package = "leaflet.extras"))
+# browseURL(system.file("examples/draw.R",
+#                       package = "leaflet.extras"))
+# browseURL(system.file("examples/shiny/draw-events/app.R",
+#                       package = "leaflet.extras"))
+# browseURL(system.file("examples/shiny/draw-events/draw_mouse_events.R",
+#                       package = "leaflet.extras"))
 }

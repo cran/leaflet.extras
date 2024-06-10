@@ -1,7 +1,6 @@
 measurePathDependencies <- function() {
   list(
-    # // "leaflet-measure-path": "1.3.1",
-    html_dep_prod("lfx-measure-path", "1.3.1", has_style = TRUE, has_binding = TRUE)
+    html_dep_prod("lfx-measure-path", "1.5.0", has_style = TRUE, has_binding = TRUE)
   )
 }
 
@@ -10,7 +9,8 @@ measurePathDependencies <- function() {
 #' @rdname measure-path
 #' @export
 #' @examples
-#' \donttest{geoJson <- readr::read_file(
+#' \donttest{
+#' geoJson <- readr::read_file(
 #'   "https://rawgit.com/benbalter/dc-maps/master/maps/ward-2012.geojson"
 #' )
 #'
@@ -22,10 +22,10 @@ measurePathDependencies <- function() {
 #'   addGeoJSONChoropleth(
 #'     geoJson,
 #'     valueProperty = "AREASQMI",
-#'     scale = c("white","red"),
+#'     scale = c("white", "red"),
 #'     mode = "q",
 #'     steps = 4,
-#'     padding = c(0.2,0),
+#'     padding = c(0.2, 0),
 #'     labelProperty = "NAME",
 #'     popupProperty = propstoHTMLTable(
 #'       props = c("NAME", "AREASQMI", "REP_NAME", "WEB_URL", "REP_PHONE", "REP_EMAIL", "REP_OFFICE"),
@@ -36,11 +36,14 @@ measurePathDependencies <- function() {
 #'     highlightOptions = highlightOptions(
 #'       weight = 2, color = "#000000",
 #'       fillOpacity = 1, opacity = 1,
-#'       bringToFront = TRUE, sendToBack = TRUE),
+#'       bringToFront = TRUE, sendToBack = TRUE
+#'     ),
 #'     pathOptions = pathOptions(
 #'       showMeasurements = TRUE,
-#'       measurementOptions = measurePathOptions(imperial = TRUE)))}
-#'
+#'       measurementOptions = measurePathOptions(imperial = TRUE)
+#'     )
+#'   )
+#' }
 #'
 enableMeasurePath <- function(map) {
   map$dependencies <- c(map$dependencies, measurePathDependencies())
@@ -56,12 +59,11 @@ enableMeasurePath <- function(map) {
 #' @rdname measure-path
 #' @export
 measurePathOptions <- function(
-  showOnHover = FALSE,
-  minPixelDistance = 30,
-  showDistances = TRUE,
-  showArea = TRUE,
-  imperial = FALSE
-) {
+    showOnHover = FALSE,
+    minPixelDistance = 30,
+    showDistances = TRUE,
+    showArea = TRUE,
+    imperial = FALSE) {
   list(
     showOnHover = showOnHover,
     minPixelDistance = minPixelDistance,
@@ -76,39 +78,39 @@ measurePathOptions <- function(
 #' @rdname measure-path
 #' @export
 addMeasurePathToolbar <- function(
-  map,
-  options = measurePathOptions()
-) {
+    map,
+    options = measurePathOptions()) {
   map <- enableMeasurePath(map) %>%
-  addEasyButtonBar(
-    easyButton(
-    states = list(
-      easyButtonState(
-        stateName = "disabled-measurement",
-        icon = "ion-ios-flask-outline",
-        title = "Enable Measurements",
-        onClick = JS("
+    addEasyButtonBar(
+      easyButton(
+        states = list(
+          easyButtonState(
+            stateName = "disabled-measurement",
+            icon = "ion-ios-flask-outline",
+            title = "Enable Measurements",
+            onClick = JS("
           function(btn, map) {
              LeafletWidget.methods.enableMeasurements.call(map);
              btn.state(\"enabled-measurement\");
 
           }")
-      ),
-      easyButtonState(
-        stateName = "enabled-measurement",
-        icon = "ion-ios-flask",
-        title = "Disable Measurements",
-        onClick = JS("
+          ),
+          easyButtonState(
+            stateName = "enabled-measurement",
+            icon = "ion-ios-flask",
+            title = "Disable Measurements",
+            onClick = JS("
           function(btn, map) {
              LeafletWidget.methods.disableMeasurements.call(map);
              btn.state(\"disabled-measurement\");
           }")
+          )
+        )
+      ),
+      easyButton(
+        icon = "ion-android-refresh", title = "Recalculate Measurements",
+        onClick = JS("function(btn, map){ LeafletWidget.methods.refreshMeasurements.call(map); }")
       )
     )
-  ),
-  easyButton(
-      icon = "ion-android-refresh", title = "Recalculate Measurements",
-      onClick = JS("function(btn, map){ LeafletWidget.methods.refreshMeasurements.call(map); }"))
-  )
   invokeMethod(map, leaflet::getMapData(map), "setMeasurementOptions", options)
 }
