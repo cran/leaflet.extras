@@ -1,6 +1,6 @@
 ## Data ##############
 geoJson <- readr::read_file(
-  "https://rawgit.com/benbalter/dc-maps/master/maps/historic-landmarks-points.geojson"
+  "https://raw.githubusercontent.com/benbalter/dc-maps/refs/heads/master/maps/historic-landmarks-points.geojson"
 )
 kml <- readr::read_file(
   system.file("examples/data/kml/crimes.kml.zip", package = "leaflet.extras")

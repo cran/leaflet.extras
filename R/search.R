@@ -14,70 +14,73 @@ leafletSearchDependencies <- function() {
 #' @param propertyName property in marker.options(or feature.properties for vector layer) trough filter elements in layer,.
 #' @param formatData callback for reformat all data from source to indexed data object.
 #' @param filterData callback for filtering data from text searched, params: textSearch, allRecords.
-#' @param moveToLocation whether to move to the found location.
+#' @param filtersearch Optional comma-separated string to prepend to the search text
+#' @param moveToLocation whether to move to the found location
 #' @param zoom zoom to this level when moving to location
 #' @param buildTip function that return row tip html node(or html string), receive text tooltip in first param.
-#' @param container container id to insert Search Control.
-#' @param minLength minimal text length for autocomplete.
-#' @param initial search elements only by initial text.
-#' @param casesensitive search elements in case sensitive text.
-#' @param autoType complete input with first suggested result and select this filled-in text..
+#' @param container container id to insert Search Control
+#' @param minLength minimal text length for autocomplete
+#' @param initial search elements only by initial text
+#' @param casesensitive search elements in case sensitive text
+#' @param autoType complete input with first suggested result and select this filled-in text
 #' @param delayType delay while typing for show tooltip.
-#' @param tooltipLimit limit max results to show in tooltip. -1 for no limit..
-#' @param tipAutoSubmit auto map panTo when click on tooltip.
-#' @param firstTipSubmit auto select first result con enter click.
-#' @param autoResize autoresize on input change.
-#' @param collapsed collapse search control at startup.
+#' @param tooltipLimit limit max results to show in tooltip. -1 for no limit
+#' @param tipAutoSubmit auto map panTo when click on tooltip
+#' @param firstTipSubmit auto select first result con enter click
+#' @param autoResize autoresize on input change
+#' @param collapsed collapse search control at startup
 #' @param autoCollapse collapse search control after submit(on button or on tips if enabled tipAutoSubmit).
 #' @param autoCollapseTime delay for autoclosing alert and collapse after blur.
-#' @param textErr 'Location not error message.
-#' @param textCancel title in cancel button.
-#' @param textPlaceholder placeholder value.
-#' @param position "topleft".
+#' @param textErr Error message
+#' @param textCancel title in cancel button
+#' @param textPlaceholder placeholder value
+#' @param position position of the search input. Default is "topleft".
 #' @param hideMarkerOnCollapse remove circle and marker on search control collapsed.
 #' @param marker Let's you set the icon. Can be an icon made by \code{\link[leaflet]{makeIcon}} or \code{\link[leaflet]{makeAwesomeIcon}}
 #' @rdname search-options
 #' @export
 searchOptions <- function(
-    url = NULL,
-    sourceData = NULL,
-    jsonpParam = NULL,
-    propertyLoc = NULL,
-    propertyName = NULL,
-    formatData = NULL,
-    filterData = NULL,
-    moveToLocation = TRUE,
-    zoom = 17,
-    buildTip = NULL,
-    container = "",
-    minLength = 1,
-    initial = TRUE,
-    casesensitive = FALSE,
-    autoType = TRUE,
-    delayType = 400,
-    tooltipLimit = -1,
-    tipAutoSubmit = TRUE,
-    firstTipSubmit = FALSE,
-    autoResize = TRUE,
-    collapsed = TRUE,
-    autoCollapse = FALSE,
-    autoCollapseTime = 1200,
-    textErr = "Location Not Found",
-    textCancel = "Cancel",
-    textPlaceholder = "Search...",
-    position = "topleft",
-    hideMarkerOnCollapse = FALSE,
-    marker = list(
-      icon = NULL,
-      animate = TRUE,
-      circle = list(
-        radius = 10,
-        weight = 3,
-        color = "#e03",
-        stroke = TRUE,
-        fill = FALSE
-      )
-    )) {
+  url = NULL,
+  sourceData = NULL,
+  jsonpParam = NULL,
+  propertyLoc = NULL,
+  propertyName = NULL,
+  formatData = NULL,
+  filterData = NULL,
+  filtersearch = NULL,
+  moveToLocation = TRUE,
+  zoom = 17,
+  buildTip = NULL,
+  container = "",
+  minLength = 1,
+  initial = TRUE,
+  casesensitive = FALSE,
+  autoType = TRUE,
+  delayType = 400,
+  tooltipLimit = -1,
+  tipAutoSubmit = TRUE,
+  firstTipSubmit = FALSE,
+  autoResize = TRUE,
+  collapsed = TRUE,
+  autoCollapse = FALSE,
+  autoCollapseTime = 1200,
+  textErr = "Location Not Found",
+  textCancel = "Cancel",
+  textPlaceholder = "Search...",
+  position = "topleft",
+  hideMarkerOnCollapse = FALSE,
+  marker = list(
+    icon = NULL,
+    animate = TRUE,
+    circle = list(
+      radius = 10,
+      weight = 3,
+      color = "#e03",
+      stroke = TRUE,
+      fill = FALSE
+    )
+  )
+) {
   leaflet::filterNULL(list(
     url = url,
     sourceData = sourceData,
@@ -86,6 +89,7 @@ searchOptions <- function(
     propertyName = propertyName,
     formatData = formatData,
     filterData = filterData,
+    filtersearch = filtersearch,
     moveToLocation = moveToLocation,
     zoom = zoom,
     buildTip = buildTip,
@@ -194,35 +198,36 @@ clearSearchOSM <- function(map) {
 #' @rdname search-geocoding
 #' @export
 addReverseSearchOSM <- function(
-    map,
-    showSearchLocation = TRUE,
-    showBounds = FALSE,
-    showFeature = TRUE,
-    fitBounds = TRUE,
-    displayText = TRUE,
-    group = NULL,
-    marker = list(
-      icon = NULL
-    ),
-    showFeatureOptions = list(
-      weight = 2,
-      color = "red",
-      dashArray = "5,10",
-      fillOpacity = 0.2,
-      opacity = 0.5
-    ),
-    showBoundsOptions = list(
-      weight = 2,
-      color = "#444444",
-      dashArray = "5,10",
-      fillOpacity = 0.2,
-      opacity = 0.5
-    ),
-    showHighlightOptions = list(
-      opacity = 0.8,
-      fillOpacity = 0.5,
-      weight = 5
-    )) {
+  map,
+  showSearchLocation = TRUE,
+  showBounds = FALSE,
+  showFeature = TRUE,
+  fitBounds = TRUE,
+  displayText = TRUE,
+  group = NULL,
+  marker = list(
+    icon = NULL
+  ),
+  showFeatureOptions = list(
+    weight = 2,
+    color = "red",
+    dashArray = "5,10",
+    fillOpacity = 0.2,
+    opacity = 0.5
+  ),
+  showBoundsOptions = list(
+    weight = 2,
+    color = "#444444",
+    dashArray = "5,10",
+    fillOpacity = 0.2,
+    opacity = 0.5
+  ),
+  showHighlightOptions = list(
+    opacity = 0.8,
+    fillOpacity = 0.5,
+    weight = 5
+  )
+) {
   map$dependencies <- c(map$dependencies, leafletSearchDependencies())
   if (displayText == TRUE) {
     map <- map %>%
@@ -269,9 +274,10 @@ addReverseSearchOSM <- function(
 #'
 #' @export
 addSearchGoogle <- function(
-    map,
-    apikey = Sys.getenv("GOOGLE_MAP_GEOCODING_KEY"),
-    options = searchOptions(autoCollapse = TRUE, minLength = 2)) {
+  map,
+  apikey = Sys.getenv("GOOGLE_MAP_GEOCODING_KEY"),
+  options = searchOptions(autoCollapse = TRUE, minLength = 2)
+) {
   url <- "https://maps.googleapis.com/maps/api/js?v=3"
   if (is.null(apikey) || apikey == "") {
     warning("Google Geocoding works best with an apikey")
@@ -306,14 +312,15 @@ removeSearchGoogle <- function(map) {
 #' @rdname search-geocoding
 #' @export
 addReverseSearchGoogle <- function(
-    map,
-    apikey = Sys.getenv("GOOGLE_MAP_GEOCODING_KEY"),
-    showSearchLocation = TRUE,
-    showBounds = FALSE,
-    showFeature = TRUE,
-    fitBounds = TRUE,
-    displayText = TRUE,
-    group = NULL) {
+  map,
+  apikey = Sys.getenv("GOOGLE_MAP_GEOCODING_KEY"),
+  showSearchLocation = TRUE,
+  showBounds = FALSE,
+  showFeature = TRUE,
+  fitBounds = TRUE,
+  displayText = TRUE,
+  group = NULL
+) {
   map$dependencies <- c(map$dependencies, leafletSearchDependencies())
   url <- "https://maps.googleapis.com/maps/api/js?v=3"
   if (is.null(apikey) || apikey == "") {
@@ -348,8 +355,9 @@ addReverseSearchGoogle <- function(
 #' @rdname search-geocoding
 #' @export
 addSearchUSCensusBureau <- function(
-    map,
-    options = searchOptions(autoCollapse = TRUE, minLength = 20)) {
+  map,
+  options = searchOptions(autoCollapse = TRUE, minLength = 20)
+) {
   map$dependencies <- c(map$dependencies, leafletSearchDependencies())
   invokeMethod(
     map,
@@ -379,10 +387,11 @@ removeSearchUSCensusBureau <- function(map) {
 #' @rdname search-options
 #' @export
 searchFeaturesOptions <- function(
-    propertyName = "label",
-    initial = FALSE,
-    openPopup = FALSE,
-    ...) {
+  propertyName = "label",
+  initial = FALSE,
+  openPopup = FALSE,
+  ...
+) {
   c(
     openPopup = openPopup,
     searchOptions(
@@ -403,9 +412,10 @@ searchFeaturesOptions <- function(
 #' @rdname search-features
 #' @export
 addSearchFeatures <- function(
-    map,
-    targetGroups,
-    options = searchFeaturesOptions()) {
+  map,
+  targetGroups,
+  options = searchFeaturesOptions()
+) {
   map$dependencies <- c(map$dependencies, leafletSearchDependencies())
 
   result <- makeSearchIcon(map, options)
@@ -454,8 +464,7 @@ makeSearchIcon <- function(map, options) {
   icon <- if (is.null(icon) || all(is.na(icon)) || isFALSE(icon)) NULL else icon
 
   if (!is.null(icon)) {
-    if (isTRUE(icon)) {
-    } else {
+    if (isTRUE(icon)) {} else {
       if (inherits(icon, "leaflet_awesome_icon")) {
         map <- addAwesomeMarkersDependencies(map, icon$library)
         icon$awesomemarker <- TRUE

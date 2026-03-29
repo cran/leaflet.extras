@@ -16,7 +16,7 @@ measurePathOptions(
   imperial = FALSE
 )
 
-addMeasurePathToolbar(map, options = measurePathOptions())
+addMeasurePathToolbar(map, options = measurePathOptions(), group = NULL)
 }
 \arguments{
 \item{map}{The map widget.}
@@ -32,18 +32,22 @@ addMeasurePathToolbar(map, options = measurePathOptions())
 \item{imperial}{If TRUE the distances/areas will be shown in imperial units.}
 
 \item{options}{The measurePathOptions.}
+
+\item{group}{A character vector specifying the group(s) of layers for measurements.
+If `group` is `NULL` (default), measurements apply to all layers.
+For a single group or multiple groups, measurements apply only to matching layers.}
 }
 \description{
 Enables measuring of length of polylines and areas of polygons
 
 Options for measure-path
 
-Adds a toolbar to enable/disable measuing path distances/areas
+Adds a toolbar to enable/disable measuring path distances/areas
 }
 \examples{
 \donttest{
 geoJson <- readr::read_file(
-  "https://rawgit.com/benbalter/dc-maps/master/maps/ward-2012.geojson"
+  "https://raw.githubusercontent.com/benbalter/dc-maps/refs/heads/master/maps/ward-2012.geojson"
 )
 
 leaflet() \%>\%
@@ -77,4 +81,9 @@ leaflet() \%>\%
   )
 }
 
+leaflet() \%>\%
+  addTiles() \%>\%
+  addCircles(lng = c(10, 20), lat = c(50, 60), group = "Group 1") \%>\%
+  addCircles(lng = c(15, 25), lat = c(55, 65), group = "Group 2") \%>\%
+  addMeasurePathToolbar(group = "Group 1") # Enable measurements for "Group 1" only
 }

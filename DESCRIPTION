@@ -1,17 +1,15 @@
 Package: leaflet.extras
 Type: Package
 Title: Extra Functionality for 'leaflet' Package
-Version: 2.0.1
+Version: 2.0.2
 Authors@R: c(
-      person("Sebastian", "Gatscha", email = "sebastian_gatscha@gmx.at", role = c("aut", "cre")),
+      person("Sebastian", "Gatscha", email = "sebastian_gatscha@gmx.at", role = c("aut")),
+      person("Sebastien", "Plutniak", email = "sebastien.plutniak@posteo.net", role = c("cre"), comment = "Package maintainance"),
       person("Bhaskar", "Karambelkar", email = "bhaskarvk@gmail.com", role = c("aut")),
       person("Barret", "Schloerke", email = "barret@rstudio.com", role = c("aut")),
-      person("Bangyou", "Zheng", email= "Bangyou.Zheng@csiro.au", role = c("ctb"),
-        comment = "Leaflet-search and Leaflet-GPS plugin integration"),
-      person("Robin", "Cura", email= "robin@cura.info", role = c("ctb"),
-        comment = "Fixes for Draw Options"),
-      person("Markus", "Voge", email= "markus.voge@ea-aw.de", role = c("ctb"),
-        comment = "Enhancements for Draw Options"),
+      person("Bangyou", "Zheng", email= "Bangyou.Zheng@csiro.au", role = c("ctb"), comment = "Leaflet-search and Leaflet-GPS plugin integration"),
+      person("Robin", "Cura", email= "robin@cura.info", role = c("ctb"), comment = "Fixes for Draw Options"),
+      person("Markus", "Voge", email= "markus.voge@ea-aw.de", role = c("ctb"), comment = "Enhancements for Draw Options"),
       person("Markus", "Dumke", role = c("ctb"), comment = "Bounce Marker addition"),
       person(family = "Mapbox", role = c("ctb", "cph"), comment = "leaflet-omnivore, csv2geojson, and togeojson libraries"),
       person("Henry", "Thasler", role = c("ctb", "cph"), comment = "Leaflet.Geodesic library"),
@@ -45,14 +43,14 @@ Encoding: UTF-8
 Depends: R (>= 3.1.0), leaflet (>= 2.0.0)
 Imports: htmlwidgets, htmltools, stringr, magrittr
 Suggests: jsonlite, readr, sf, xfun, testthat (>= 3.0.0)
-URL: https://github.com/trafficonese/leaflet.extras,
-        https://trafficonese.github.io/leaflet.extras/
-BugReports: https://github.com/trafficonese/leaflet.extras/issues
-RoxygenNote: 7.3.1
+URL: https://github.com/sebastien-plutniak/leaflet.extras
+BugReports: https://github.com/sebastien-plutniak/leaflet.extras/issues
+RoxygenNote: 7.3.3
 Config/testthat/edition: 3
 NeedsCompilation: no
-Packaged: 2024-08-19 20:41:21 UTC; kona1
-Author: Sebastian Gatscha [aut, cre],
+Packaged: 2026-03-28 23:44:49 UTC; seb
+Author: Sebastian Gatscha [aut],
+  Sebastien Plutniak [cre] (Package maintainance),
   Bhaskar Karambelkar [aut],
   Barret Schloerke [aut],
   Bangyou Zheng [ctb] (Leaflet-search and Leaflet-GPS plugin integration),
@@ -82,6 +80,6 @@ Author: Sebastian Gatscha [aut, cre],
     library),
   Dale Harvey [ctb, cph] (pouchdb-browser library),
   Mike Bostock [ctb, cph] (topojson library)
-Maintainer: Sebastian Gatscha <sebastian_gatscha@gmx.at>
+Maintainer: Sebastien Plutniak <sebastien.plutniak@posteo.net>
 Repository: CRAN
-Date/Publication: 2024-08-19 22:40:03 UTC
+Date/Publication: 2026-03-29 15:50:08 UTC

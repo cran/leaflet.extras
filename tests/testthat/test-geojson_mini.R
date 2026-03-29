@@ -1,7 +1,7 @@
 ## DATA ###################
-fName <- "https://rawgit.com/TrantorM/leaflet-choropleth/gh-pages/examples/basic_topo/crimes_by_district.topojson"
+fName <- "https://raw.githubusercontent.com/TrantorM/leaflet-choropleth/refs/heads/gh-pages/examples/basic_topo/crimes_by_district.topojson"
 topoJson <- readr::read_file(fName)
-geosonpointurl <- "https://rawgit.com/benbalter/dc-maps/master/maps/historic-landmarks-points.geojson"
+geosonpointurl <- "https://raw.githubusercontent.com/benbalter/dc-maps/refs/heads/master/maps/historic-landmarks-points.geojson"
 geoJson <- readr::read_file(geosonpointurl)
 
 historicLandmark <- makeAwesomeIcon(icon = "flag", library = "ion", markerColor = "green", iconColor = "black")
@@ -194,9 +194,6 @@ test_that("geojson and jsFunctions", {
   expect_identical(ts$x$calls[[length(ts$x$calls)]]$args[[4]], "circleMarker")
 
 
-
-
-
   ts <- leaflet() %>%
     addBootstrapDependency() %>%
     setView(-75.14, 40, zoom = 11) %>%
@@ -226,7 +223,6 @@ test_that("geojson and jsFunctions", {
   expect_identical(ts$x$calls[[length(ts$x$calls)]]$args[[1]], topoJson)
   expect_null(ts$x$calls[[length(ts$x$calls)]]$args[[2]])
   expect_identical(ts$x$calls[[length(ts$x$calls)]]$args[[3]], "orange-red")
-
 
 
   ts <- leaflet() %>%
@@ -272,7 +268,6 @@ test_that("geojson and jsFunctions", {
         props = "props1", elem = "asd", "asdasd"
       )
     ))
-
 
 
   ## KML Chlorpleth ###########################

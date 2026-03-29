@@ -1,3 +1,19 @@
+# leaflet.extras (development version)
+
+
+# leaflet.extras 2.0.2
+
+## New Features
+- Include the plugin [`leaflet-groupedlayercontrol`](https://github.com/ismyrnow/leaflet-groupedlayercontrol). 
+  See the example in `/inst/examples/shiny/groupedlayercontrol_app.R` for a demo of all options and methods. Fix #202
+
+## Bugfixes
+- New argument `filtersearch` for `searchOptions` to limit the Nominatim search area. Fix #168
+- `addSearchFeatures` displays all matching results, even in the case of duplicates. However, markers and animations are currently only applied to a single result and not to all matching entries. Fix #150 
+- New argument `fillColor` for `pulseIcons`. Fix #231
+- New argument `group` for `addMeasurePathToolbar`. Supports single group, multiple groups, or all layers (`group = NULL`). Fix #233
+- Fix outdated links to example datasets (after that the rawgit service stoped)
+
 # leaflet.extras 2.0.1
 
 ## New Features
@@ -6,6 +22,7 @@
 
 ## Bugfixes
 - Fixed CRAN devel checks: *Found the following Rd file(s) with Rd \link{} targets missing package*
+
 
 # leaflet.extras 2.0.0
 
